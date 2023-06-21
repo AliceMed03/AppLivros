@@ -1,25 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+import MenuSuperior from './components/MenuSuperior';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+//function App() {
+const App = () => {
+  return ( //tudo que vai no return é o que aparece na aplicação
+    <>
+    <MenuSuperior/>
+    </>
   );
 }
-
+//Serão criados 2 componentes para essa aplicação
+//MenuSuperior.js
+//InclusaoLivros.js
 export default App;
