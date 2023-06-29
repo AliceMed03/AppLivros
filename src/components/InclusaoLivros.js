@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { api } from "../config_axios";
 import { useState } from "react";
-
 //register serve para definir os nomes dos campos do form (validações)
 //handleSubmit, para indicar o método a ser acionado no evento onSubmit do form
 //form onSubmit={handleSubmit(salvar)}
