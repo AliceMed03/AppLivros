@@ -51,19 +51,23 @@ const excluir = async(id,titulo) => {
 //alterar os registros
 const alterar = async (id,titulo,index) => {
     const novoPreco = Number(prompt(`Digite o novo preço do livro ${titulo}`));
-    if (isNaN(novoPreco)){
+    if (isNaN(novoPreco) || novoPreco <= 0){
+        alert('Digite um número maior que 0!')
         return;
     }
-    try{
+    try{//captura os erros 
+        //chamando o backend e passando os dados
         await api.put(`livros/${id}`,{preco: novoPreco});
         const livrosAtualizados = [...livros];
-        livrosAtualizados[index].preco = novoPreco;
+        const indiceLivro = livrosAtualizados.findIndex(livro => livro.id === id);
+        livrosAtualizados[indiceLivro].preco = novoPreco;
         setLivros(livrosAtualizados);
+        obterLista();
     }catch(error){
         alert(`Erro: ..Não foi possível alterar o livro ${titulo}: ${error}`);
     }
-
 }
+
     return (
        <div className="container">
         <div className="row">
@@ -104,7 +108,7 @@ const alterar = async (id,titulo,index) => {
                         preco={livro.preco}
                         foto={livro.foto}
                         excluirClick={()=>excluir(livro.id,livro.titulo)}
-                        alterarClick={()=>alterar(livro.id,livro.titulo)}
+                        alterarClick={()=>alterar(livro.id,livro.titulo,livro.id)}
                     />
                 ))}
             </tbody>
