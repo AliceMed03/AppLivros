@@ -1,16 +1,16 @@
 import {useForm} from "react-hook-form";
 import { useState, useEffect } from "react";
 import { api } from "../config_axios";
-import ItemListaAutores from "./ItemListaAutores";
+import ItemListaEditora from "./ItemListaEditora";  
 
-const ManutencaoAutores = () => {
+const ManutencaoEditora = () => {
     const {register, handleSubmit, reset} = useForm();
-    const [autores, setAutores] = useState([]);
+    const [editora, setEditora] = useState([]);
 
     const obterLista = async () => {
         try{
-            const lista = await api.get("autores");
-            setAutores(lista.data);
+            const lista = await api.get("editora");
+            setEditora(lista.data);
         }catch(error){
             alert(`Erro: ..Não foi possível obter os dados: ${error}`);
         }
@@ -24,10 +24,10 @@ useEffect(() => {
 
 const filtrarLista = async (campos) => {
     try{
-        const lista = await api.get(`autores/filtro/${campos.palavra}`);
+        const lista = await api.get(`editora/filtro/${campos.palavra}`);
         lista.data.length
-        ? setAutores(lista.data)
-        : alert("Não há autores cadastrados com a palavra chave pesquisada");
+        ? setEditora(lista.data)
+        : alert("Não há editoras cadastradas com a palavra chave pesquisada");
     }catch(error){
         alert(`Erro: ..Não foi possível obter os dados: ${error}`);
     }
@@ -36,35 +36,32 @@ const filtrarLista = async (campos) => {
 }
 
 const excluir = async(id,nome) => {
-    if(!window.confirm(`Confirma a exclusão do autor ${nome}?`)){
+    if(!window.confirm(`Confirma a exclusão da editora ${nome}?`)){
         return;
     }
     try{
-        await api.delete(`autores/${id}`);
-        setAutores(autores.filter(autor => autor.id !== id));
+        await api.delete(`editora/${id}`);
+        setEditora(editora.filter(editora => editora.id !== id));
         
     }catch(error){
-        alert(`Erro: ..Não foi possível excluir o autor ${nome}: ${error}`);
+        alert(`Erro: ..Não foi possível excluir a editora ${nome}: ${error}`);
     }
 }
 
 //alterar os registros
 const alterar = async (id,nome,index) => {
-    const novoNumero = Number(prompt(`Digite o novo número de telefone do(a) autor(a) ${nome}`));
-    if (isNaN(novoNumero) || novoNumero <= 0){
-        alert('Digite um número maior que 0!')
-        return;
-    }
+    const novaEditora = prompt(`Digite o novo nome da editora ${nome}`);
+ 
     try{//captura os erros 
         //chamando o backend e passando os dados
-        await api.put(`autores/${id}`,{telefone: novoNumero});
-        const autoresAtualizados = [...autores];
-        const indiceAutor = autoresAtualizados.findIndex(autor => autor.id === id);
-        autoresAtualizados[indiceAutor].telefone = novoNumero;
-        setAutores(autoresAtualizados);
+        await api.put(`editora/${id}`,{nome: novaEditora});
+        const EditorasAtualizadas = [...editora];
+        const indiceEditora = EditorasAtualizadas.findIndex(editora => editora.id === id);
+        EditorasAtualizadas[indiceEditora].nome = novaEditora;
+        setEditora(EditorasAtualizadas);
         obterLista();
     }catch(error){
-        alert(`Erro: ..Não foi possível alterar o número do autor ${nome}: ${error}`);
+        alert(`Erro: ..Não foi possível alterar o nome da editora ${nome}: ${error}`);
     }
 }
 
@@ -90,27 +87,27 @@ const alterar = async (id,nome,index) => {
                 <tr>
                     <th>Cód.</th>
                     <th>Nome</th>
-                    <th>Sobrenome</th>
-                    <th>Idade</th>
-                    <th>Data de Nascimento</th>
-                    <th>Sexo</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
                     <th>Telefone</th>
+                    <th>Rua</th>
+                    <th>CEP</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {autores.map((autor) => (
-                    <ItemListaAutores
-                        key={autor.id}
-                        id={autor.id}
-                        nome={autor.nome}
-                        sobrenome={autor.sobrenome}
-                        idade={autor.idade}
-                        data_nascimento={autor.data_nascimento}
-                        sexo={autor.sexo}
-                        telefone={autor.telefone}
-                        excluirClick={()=>excluir(autor.id,autor.nome)}
-                        alterarClick={()=>alterar(autor.id,autor.nome)}
+                {editora.map((editora) => (
+                    <ItemListaEditora
+                        key={editora.id}
+                        id={editora.id}
+                        nome={editora.nome}
+                        cidade={editora.cidade}
+                        estado={editora.estado}
+                        telefone={editora.telefone}
+                        rua={editora.rua}
+                        cep={editora.cep}
+                        excluirClick={()=>excluir(editora.id,editora.nome)}
+                        alterarClick={()=>alterar(editora.id,editora.nome)}
                     />
                 ))}
             </tbody>
@@ -120,4 +117,4 @@ const alterar = async (id,nome,index) => {
     );
 };
 
-export default ManutencaoAutores;
+export default ManutencaoEditora;
