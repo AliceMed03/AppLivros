@@ -5,7 +5,7 @@ const MenuSuperior = () => {
   return (
     <nav className="navbar navbar-expand-sm bg-primary navbar-dark sticky-top">
       <div className="container">
-        <Link to="/" className="navbar-brand">Controle Pessoal</Link>
+        <Link to="/" className="navbar-brand">Controle Livros</Link>
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link to="/" className="nav-link">Inclusão de Livros</Link>

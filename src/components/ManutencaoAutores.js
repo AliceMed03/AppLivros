@@ -77,7 +77,7 @@ const alterar = async (id,nome,index) => {
             <div className="col-sm-5">
                 <form onSubmit={handleSubmit(filtrarLista)}>
                     <div className="input-group mt-3">
-                        <input type="text" className="form-control" placeholder="Titulo ou Autor" required {...register("palavra")} />
+                        <input type="text" className="form-control" placeholder="Nome do Autor" required {...register("palavra")} />
                         <input type="submit" className="btn btn-primary" value="Pesquisar" />
                         <input type="button" className="btn btn-danger" value="Todos" onClick={()=>{reset({palavra:""});obterLista();}}/>
                     </div>
